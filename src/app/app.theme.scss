@@ -1,0 +1,47 @@
+@import '~@angular/material/theming';
+
+@mixin app-color-mixin($config-or-theme) {
+  // Extract the color configuration in case a theme has been passed.
+  // This allows consumers to either pass a theme object or a color configuration.
+  $config: mat-get-color-config($config-or-theme);
+  // Extract the palettes you need from the theme definition.
+  $primary: map-get($config, primary);
+  $accent: map-get($config, accent);
+  $background-palette: map-get($config, background);
+  $foreground-palette: map-get($config, foreground);
+
+  // Define any styles affected by the theme.
+  .container {
+    // Use mat-color to extract individual colors from a palette.
+    color: map_get($foreground-palette, base);
+    background: map_get($background-palette, background);
+  }
+}
+
+@mixin app-typography-mixin($config-or-theme) {
+  // Extract the typography configuration in case a theme has been passed.
+  $config: mat-get-typography-config($config-or-theme);
+
+  .container {
+    font: {
+      family: mat-font-family($config, body-1);
+      size: mat-font-size($config, body-1);
+      weight: mat-font-weight($config, body-1);
+    }
+  }
+}
+
+@mixin app-theme($theme) {
+  // Extracts the color and typography configurations from the theme.
+  $color: mat-get-color-config($theme);
+  $typography: mat-get-typography-config($theme);
+
+  // Do not generate styles if configurations for individual theming
+  // systems have been explicitly set to `null`.
+  @if $color != null {
+    @include app-color-mixin($color);
+  }
+  @if $typography != null {
+    @include app-typography-mixin($typography);
+  }
+}

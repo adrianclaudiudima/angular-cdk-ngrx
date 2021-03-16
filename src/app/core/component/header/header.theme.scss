@@ -1,0 +1,26 @@
+@import '~@angular/material/theming';
+
+@mixin app-header-color-mixin($config-or-theme) {
+  // Extract the color configuration in case a theme has been passed.
+  // This allows consumers to either pass a theme object or a color configuration.
+  $config: mat-get-color-config($config-or-theme);
+  // Extract the palettes you need from the theme definition.
+  $primary: map-get($config, primary);
+  $accent: map-get($config, accent);
+  $background-palette: map-get($config, background);
+  $foreground-palette: map-get($config, foreground);
+
+  // Define any styles affected by the theme.
+  .header {
+    // Use mat-color to extract individual colors from a palette.
+    color: map_get($foreground-palette, base);
+    background: map_get($background-palette, background);
+
+    &__logo {
+      .mat-title {
+        color: map_get($accent, main);
+      }
+
+    }
+  }
+}

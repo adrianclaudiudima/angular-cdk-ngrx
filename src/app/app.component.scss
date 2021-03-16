@@ -1,0 +1,11 @@
+.container {
+
+
+  &__router {
+    margin-top: 60px;
+    min-height: calc(100vh - 60px);
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+}

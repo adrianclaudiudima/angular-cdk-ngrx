@@ -1,0 +1,109 @@
+@import '~@angular/material/theming';
+
+// Light Theme Text
+$dark-text: #000000;
+$dark-primary-text: rgba($dark-text, 0.87);
+$dark-accent-text: rgba($dark-primary-text, 0.54);
+$dark-disabled-text: rgba($dark-primary-text, 0.38);
+$dark-dividers: rgba($dark-primary-text, 0.12);
+$dark-focused: rgba($dark-primary-text, 0.12);
+
+// Background Light Theme Config
+$light-background: #fafafa;
+$light-bg-darker-5: darken($light-background, 5%);
+$light-bg-darker-10: darken($light-background, 10%);
+$light-bg-darker-20: darken($light-background, 20%);
+$light-bg-darker-30: darken($light-background, 30%);
+$light-bg-lighter-5: lighten($light-background, 5%);
+$dark-bg-tooltip: lighten(#2c2c2c, 20%);
+$dark-bg-alpha-4: rgba(#2c2c2c, 0.04);
+$dark-bg-alpha-12: rgba(#2c2c2c, 0.12);
+
+
+$light-theme-foreground: (
+  base: black,
+  divider: $dark-dividers,
+  dividers: $dark-dividers,
+  disabled: $dark-disabled-text,
+  disabled-button: rgba($dark-text, 0.26),
+  disabled-text: $dark-disabled-text,
+  elevation: black,
+  secondary-text: $dark-accent-text,
+  hint-text: $dark-disabled-text,
+  accent-text: $dark-accent-text,
+  icon: $dark-accent-text,
+  icons: $dark-accent-text,
+  text: $dark-primary-text,
+  slider-min: $dark-primary-text,
+  slider-off: rgba($dark-text, 0.26),
+  slider-off-active: $dark-disabled-text,
+);
+
+$light-theme-background: (
+  background: $light-background,
+  status-bar: $light-bg-darker-20,
+  app-bar: $light-bg-darker-5,
+  hover: $dark-bg-alpha-4,
+  card: $light-bg-lighter-5,
+  dialog: $light-bg-lighter-5,
+  tooltip: $dark-bg-tooltip,
+  disabled-button: $dark-bg-alpha-12,
+  raised-button: $light-bg-lighter-5,
+  focused-button: $dark-focused,
+  selected-button: $light-bg-darker-20,
+  selected-disabled-button: $light-bg-darker-30,
+  disabled-button-toggle: $light-bg-darker-10,
+  unselected-chip: $light-bg-darker-10,
+  disabled-list-option: $light-bg-darker-10,
+);
+
+$light-primary: (
+  main: #212121,
+  lighter: #484848,
+  darker: #000000,
+  200: #616161, // For slide toggle,
+  contrast : (
+    main: $light-primary-text,
+    lighter: $light-primary-text,
+    darker: $light-primary-text,
+  )
+);
+
+$light-accent: (
+  main: #d84315,
+  lighter: #ff7543,
+  darker: #9f0000,
+  200: #ff7543, // For slide toggle,
+  contrast : (
+    main: $light-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  )
+);
+
+$mat-warn: (
+  main: #e53935,
+  lighter: #ff6f60,
+  darker: #ab000d,
+  200: #ff6f60, // For slide toggle,
+  contrast : (
+    main: $light-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  )
+);
+$light-warn: mat-palette($mat-warn, main, lighter, darker);
+$light-primary: mat-palette($light-primary, main, lighter, darker);
+$light-accent: mat-palette($light-accent, main, lighter, darker);
+
+$light-theme-default-background: mat-dark-theme((
+  color: (
+    primary: $light-primary,
+    accent: $light-accent,
+    warn: $light-warn,
+  )
+));
+
+$light-theme-updated-background: map_merge($light-theme-default-background, (color: map_merge(map-get($light-theme-default-background, color), (background: $light-theme-background))));
+$light-theme-updated-foreground: map_merge($light-theme-updated-background, (color: map_merge(map-get($light-theme-updated-background, color), (foreground: $light-theme-foreground))));
+$light-theme-custom-background: $light-theme-updated-foreground;

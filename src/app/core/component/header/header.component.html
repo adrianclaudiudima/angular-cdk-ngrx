@@ -1,0 +1,36 @@
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="mat-elevation-z5 header">
+  <div fxLayout="column" fxLayoutAlign="center start" class="header__logo">
+    <div class="mat-title">ENDAVA</div>
+    <div class="mat-caption">CDK & NG-RX</div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+
+    <div fxLayout="row" fxLayoutGap="10px" class="header__actions">
+      <button mat-button [matMenuTriggerFor]="cdk">
+        <span>CDK</span>
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <button mat-button [matMenuTriggerFor]="ngrx">
+        <span>NG-RX</span>
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+    </div>
+
+    <mat-slide-toggle
+      [checked]="(isDarkTheme$ | async)"
+      matTooltip="Change theme"
+      color="accent"
+      (change)="switchTheme($event)">
+    </mat-slide-toggle>
+  </div>
+</mat-toolbar>
+
+<mat-menu #cdk="matMenu">
+  <button mat-menu-item>CDK Overlay - Global</button>
+  <button mat-menu-item>CDK Overlay - Connected</button>
+  <button mat-menu-item>CDK Portal</button>
+</mat-menu>
+<mat-menu #ngrx="matMenu">
+  <button mat-menu-item>Item 1</button>
+  <button mat-menu-item>Item 2</button>
+</mat-menu>

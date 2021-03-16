@@ -1,0 +1,30 @@
+.header {
+  height: 60px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  &__logo {
+    .mat-title {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .mat-caption {
+      letter-spacing: 1px;
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  &__actions {
+    button {
+      min-width: 80px;
+
+      mat-icon {
+        margin-left: 5px;
+      }
+    }
+  }
+}

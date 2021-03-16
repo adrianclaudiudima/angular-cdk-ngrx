@@ -1,1 +1,54 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+@import '~src/app/app.theme';
+@import '~src/app/core/component/header/header.theme';
+// Plus imports for other components in your app.
+@import "theme/dark/dark-theme";
+@import "theme/light/light-theme";
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// **Be sure that you only ever include this mixin once!**
+@include mat-core();
+
+// Define the default theme (same as the example above).
+
+// Include the default theme styles (color and default density)
+@include angular-material-theme($light-theme-custom-background);
+@include app-theme($light-theme-custom-background);
+@include app-header-color-mixin($light-theme-custom-background);
+// Define an alternate dark theme.
+
+// Include the dark color styles inside of a block with a CSS class. You can make this
+// CSS class whatever you want. In this example, any component inside of an element with
+// `.unicorn-dark-theme` will be affected by this alternate dark theme instead of the default theme.
+.dark-theme {
+  @include angular-material-color($dark-theme);
+  @include app-theme($dark-theme);
+  @include app-header-color-mixin($dark-theme);
+
+  .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: $dark-bg-lighter-5;
+  }
+
+
+}
+
+// Specific component overrides, pieces that are not in line with the general theming
+
+// Handle buttons appropriately, with respect to line-height
+.mat-raised-button, .mat-stroked-button, .mat-flat-button {
+  padding: 0 1.15em;
+  margin: 0 .65em;
+  min-width: 3em;
+  line-height: 36.4px
+}
+
+.mat-standard-chip {
+  padding: .5em .85em;
+  min-height: 2.5em;
+}
+
+body {
+  font-family: 'Lato', Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
+}
