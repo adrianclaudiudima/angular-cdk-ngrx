@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {OverlayContainer} from '@angular/cdk/overlay';
-import {ReplaySubject, Subject} from 'rxjs';
+import {Observable, ReplaySubject, Subject} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class ThemeService {
@@ -8,6 +9,16 @@ export class ThemeService {
   private isDarkMode = false;
   private isDarkModeSubject: Subject<boolean> = new ReplaySubject<boolean>(1);
   public isDarkMode$ = this.isDarkModeSubject.asObservable();
+  public chartThemeConfig: Observable<ChartThemeConfig> = this.isDarkMode$.pipe(
+    map(isDarkMode => {
+      return {
+        backgroundColor: isDarkMode ? '#EFEFEF' : '#1d1d1d',
+        borderColor: isDarkMode ? '#ef5350' : '#ef5350',
+        hoverBackgroundColor: isDarkMode ? '#FFFFFF' : '#000000',
+        isDark: isDarkMode
+      };
+    })
+  );
 
   constructor(private overlayContainer: OverlayContainer) {
     const item = localStorage.getItem(this.themeKey);
@@ -28,4 +39,11 @@ export class ThemeService {
     localStorage.setItem(this.themeKey, String(isDark));
     this.isDarkModeSubject.next(this.isDarkMode);
   }
+}
+
+export interface ChartThemeConfig {
+  backgroundColor: string;
+  hoverBackgroundColor: string;
+  borderColor: string;
+  isDark: boolean;
 }

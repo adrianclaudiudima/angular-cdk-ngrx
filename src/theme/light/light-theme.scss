@@ -96,7 +96,7 @@ $light-warn: mat-palette($mat-warn, main, lighter, darker);
 $light-primary: mat-palette($light-primary, main, lighter, darker);
 $light-accent: mat-palette($light-accent, main, lighter, darker);
 
-$light-theme-default-background: mat-dark-theme((
+$light-theme-default-background: mat-light-theme((
   color: (
     primary: $light-primary,
     accent: $light-accent,

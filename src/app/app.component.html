@@ -1,9 +1,11 @@
 <div [ngClass]="{'dark-theme':(isDarkMode$ | async),'light-theme':!(isDarkMode$ | async)}">
   <div class="container">
     <app-header></app-header>
-    <div class="container__router">
-      <app-material-test></app-material-test>
-      <router-outlet></router-outlet>
+    <div style="overflow-y: scroll; width: 100%;">
+      <div class="container__router">
+        <router-outlet></router-outlet>
+      </div>
     </div>
+
   </div>
 </div>

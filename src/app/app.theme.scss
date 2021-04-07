@@ -40,6 +40,14 @@
   // systems have been explicitly set to `null`.
   @if $color != null {
     @include app-color-mixin($color);
+
+    $accent: map-get($color, accent);
+
+    a {
+      color: map_get($accent, lighter);
+      text-decoration: none;
+    }
+
   }
   @if $typography != null {
     @include app-typography-mixin($typography);

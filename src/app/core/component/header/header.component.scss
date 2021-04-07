@@ -1,11 +1,15 @@
 .header {
-  height: 60px;
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
 
+  mat-toolbar-row {
+    width: 100%;
+  }
+
   &__logo {
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+
     .mat-title {
       margin: 0;
       font-size: 24px;

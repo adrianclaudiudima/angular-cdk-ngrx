@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ThemeService} from '../../../shared/services/theme.service';
+import {ThemeService} from '../../services/theme.service';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {Observable} from 'rxjs';
 
@@ -17,7 +17,6 @@ export class HeaderComponent {
   }
 
   switchTheme(isDark: MatSlideToggleChange): void {
-    console.log(isDark);
     this.themeService.setTheme(isDark.checked);
   }
 }

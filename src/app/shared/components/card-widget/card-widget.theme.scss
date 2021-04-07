@@ -1,0 +1,30 @@
+@mixin app-card-widget($config-or-theme) {
+  // Extract the color configuration in case a theme has been passed.
+  // This allows consumers to either pass a theme object or a color configuration.
+  $config: mat-get-color-config($config-or-theme);
+  // Extract the palettes you need from the theme definition.
+  $primary: map-get($config, primary);
+  $accent: map-get($config, accent);
+  $background-palette: map-get($config, background);
+  $foreground-palette: map-get($config, foreground);
+  $is-dark-theme: map-get($config, is-dark);
+
+  // Define any styles affected by the theme.
+  .card-widget {
+    // Use mat-color to extract individual colors from a palette.
+    // color: map_get($foreground-palette, base);
+    // background: map_get($background-palette, background);
+
+    &__title {
+      color: map_get($foreground-palette, secondary-text);
+    }
+
+    &__description {
+      color: if($is-dark-theme, map_get($accent, lighter), map_get($accent, main));
+    }
+
+    &:hover {
+      @include mat-elevation(5)
+    }
+  }
+}

@@ -1,0 +1,18 @@
+@import '~@angular/material/theming';
+
+.homepage {
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+
+
+  .documentation {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  mat-card:hover {
+    @include mat-elevation(5)
+  }
+
+}

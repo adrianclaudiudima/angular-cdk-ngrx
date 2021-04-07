@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ThemeService} from './shared/services/theme.service';
+import {ThemeService} from './core/services/theme.service';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.httpClient.get('http://localhost:3000/employees').subscribe(v => console.log(v));
   }
 
 

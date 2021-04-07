@@ -1,1 +1,46 @@
-<div class="mat-display-1">Welcome to CDK & NG-RX workshop</div>
+<div class="homepage">
+
+  <div class="mat-title">CDK & NGRX Workshop</div>
+  <div class="mat-body-1">You should be familiar with Angular Framework and RxJS</div>
+  <div class="mat-body-1">This workshop is spread across 4 weeks, having one technical presentation in each week.</div>
+  <ul class="mat-body-1">
+    <li>Week 1 : <span class="mat-body-2">CDK - Overlay</span></li>
+    <li>Week 2 : <span class="mat-body-2">CDK - Portal</span></li>
+    <li>Week 3 : <span class="mat-body-2">NG-RX - Actions & Store & Effects</span></li>
+    <li>Week 3 : <span class="mat-body-2">NG-RX - Actions & Store & Effects</span></li>
+  </ul>
+
+  <div
+    gdColumns="50% 50%"
+    gdColumns.xs="100%"
+    gdColumns.sm="100%"
+    gdGap.xs="50px"
+    gdGap="20px">
+    <mat-card class="mat-elevation-z1" fxLayout="column" fxLayoutAlign="space-between start">
+      <div>
+        <div class="mat-title">CDK</div>
+        <div class="mat-body-1">
+          The Component Dev Kit (CDK) is a set of behavior primitives for building UI components.
+        </div>
+        <div class="mat-body-2 documentation">Check official documentation <a href="https://material.angular.io/cdk/categories" target="_blank">here</a>.</div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center" style="width: 100%">
+        <button mat-button mat-raised-button color="accent" fxFlex="100%" routerLink="cdk">
+          CDK Demo
+        </button>
+      </div>
+    </mat-card>
+
+    <mat-card class="mat-elevation-z1" fxLayout="column" fxLayoutAlign="space-between start" style="width: 100%">
+      <div>
+        <div class="mat-title">NG-RX</div>
+        <div class="mat-body-1">NgRx Store provides reactive state management for Angular apps inspired by Redux. Unify the events in your application and derive state using RxJS.</div>
+        <div class="mat-body-2 documentation">Check official documentation <a href="https://ngrx.io/guide/store" target="_blank">here</a>.</div>
+      </div>
+
+      <button mat-button mat-raised-button color="accent" style="width: 100%;margin-top: 10px" routerLink="ngrx">
+        NGRX Demo
+      </button>
+    </mat-card>
+  </div>
+</div>

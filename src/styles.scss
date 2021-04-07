@@ -1,6 +1,7 @@
 @import '~@angular/material/theming';
 @import '~src/app/app.theme';
 @import '~src/app/core/component/header/header.theme';
+@import '~src/app/shared/components/card-widget/card-widget.theme';
 // Plus imports for other components in your app.
 @import "theme/dark/dark-theme";
 @import "theme/light/light-theme";
@@ -15,6 +16,7 @@
 @include angular-material-theme($light-theme-custom-background);
 @include app-theme($light-theme-custom-background);
 @include app-header-color-mixin($light-theme-custom-background);
+@include app-card-widget($light-theme-custom-background);
 // Define an alternate dark theme.
 
 // Include the dark color styles inside of a block with a CSS class. You can make this
@@ -24,6 +26,7 @@
   @include angular-material-color($dark-theme);
   @include app-theme($dark-theme);
   @include app-header-color-mixin($dark-theme);
+  @include app-card-widget($dark-theme);
 
   .mat-form-field-appearance-fill .mat-form-field-flex {
     background-color: $dark-bg-lighter-5;
@@ -52,3 +55,6 @@ body {
   margin: 0;
   padding: 0;
 }
+
+
+

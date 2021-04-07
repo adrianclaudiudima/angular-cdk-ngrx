@@ -1,0 +1,11 @@
+.cdk-homepage {
+  margin-top: 40px;
+  width: 100%;
+
+  &__cards {
+
+    app-card-widget {
+      cursor: pointer;
+    }
+  }
+}

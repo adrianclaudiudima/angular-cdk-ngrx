@@ -5,7 +5,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SharedModule} from './shared/shared.module';
-import {DialogContentExampleDialog, MaterialTestComponent} from './components/material-test.component';
+import {DialogContentExampleDialog, MaterialTestComponent} from './components/material-test/material-test.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppCoreModule} from './core/app-core.module';
 import {HttpClientModule} from '@angular/common/http';
@@ -21,8 +21,8 @@ import {HttpClientModule} from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     AppCoreModule,
-    HttpClientModule,
     SharedModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule
   ],

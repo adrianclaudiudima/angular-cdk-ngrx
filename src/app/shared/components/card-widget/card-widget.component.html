@@ -1,0 +1,14 @@
+<mat-card class="card-widget">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="column" fxLayoutAlign="center start">
+      <div class="mat-body-1 card-widget__title" *ngIf="title">
+        {{title}}
+      </div>
+      <div class="mat-title card-widget__description" *ngIf="description">
+        {{description}}
+      </div>
+    </div>
+    <ng-content select="[appCardWidgetIcon]"></ng-content>
+  </div>
+
+</mat-card>

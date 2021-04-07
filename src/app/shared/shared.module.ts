@@ -33,48 +33,86 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {ThemeService} from './services/theme.service';
 import {OverlayModule} from '@angular/cdk/overlay';
+import {HttpClientModule} from '@angular/common/http';
+import {ProductService} from './services/product.service';
+import {OrderService} from './services/order.service';
+import {CustomerService} from './services/customer.service';
+import {CardWidgetComponent} from './components/card-widget/card-widget.component';
+import {CardWidgetIconDirective} from './components/card-widget/card-widget.directive';
+import {CommonModule} from '@angular/common';
+import {ChartsModule} from 'ng2-charts';
+import {BarChartComponent} from './components/bar-chart/bar-chart.component';
+import {OrdersComponent} from './components/orders/orders.component';
+import {MatSortModule} from '@angular/material/sort';
+
+const materialDependencies = [
+  MatAutocompleteModule,
+  MatBadgeModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSnackBarModule,
+  MatStepperModule,
+  MatTableModule,
+  MatTabsModule,
+  MatTooltipModule,
+  MatSlideToggleModule,
+  MatMomentDateModule,
+  MatToolbarModule,
+  MatSortModule,
+  MatAutocompleteModule,
+  OverlayModule,
+];
 
 @NgModule({
+  declarations: [
+    CardWidgetComponent,
+    BarChartComponent,
+    OrdersComponent,
+    CardWidgetIconDirective
+  ],
+  imports: [
+    CommonModule,
+    FlexLayoutModule,
+    ChartsModule,
+    materialDependencies
+  ],
   exports: [
     FlexLayoutModule,
-    MatAutocompleteModule,
-    MatBadgeModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSnackBarModule,
-    MatStepperModule,
-    MatTableModule,
-    MatTabsModule,
-    MatTooltipModule,
-    MatSlideToggleModule,
-    MatMomentDateModule,
-    MatToolbarModule,
-    OverlayModule
+    ChartsModule,
+    HttpClientModule,
+    materialDependencies,
+    CardWidgetComponent,
+    CardWidgetIconDirective,
+    BarChartComponent,
+    OrdersComponent
   ],
-  providers: [ThemeService]
+  providers: [
+    ProductService,
+    OrderService,
+    CustomerService
+  ]
 })
 export class SharedModule {
 
