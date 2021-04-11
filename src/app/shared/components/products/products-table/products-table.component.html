@@ -1,0 +1,87 @@
+<div class="products-table">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z1" matSort (matSortChange)="sortChanged.emit($event)">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> No.</th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="productName">
+
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="isSmall else productNameValues">
+          <div fxLayout="column" fxLayoutAlign="start start" style="padding: 10px;">
+
+            <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+              <div>
+                <div class="mat-body-2" style="font-weight: 600">Product name</div>
+                <div class="mat-caption">{{element.productName}}</div>
+              </div>
+              <div fxLayout="column" fxLayoutAlign="start end">
+                <div class="mat-body-2" style="font-weight: 600">Product price</div>
+                <div class="mat-caption">{{element.price}}</div>
+              </div>
+            </div>
+            <div>
+              <div class="mat-body-2" style="font-weight: 600">Product Description</div>
+              <div class="mat-caption">{{element.productDescription | slice:0:300}}
+                <ng-container *ngIf="element.productDescription?.length > 300">...</ng-container>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #productNameValues>
+          #{{element.productName}}
+        </ng-template>
+
+      </td>
+
+      <th mat-header-cell *matHeaderCellDef>
+        <ng-container *ngIf="isSmall else productName">
+          Product Details
+        </ng-container>
+        <ng-template #productName>
+          Product name
+        </ng-template>
+      </th>
+    </ng-container>
+
+    <ng-container matColumnDef="productDescription" *ngIf="!isSmall">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Product description</th>
+      <td mat-cell *matCellDef="let element">
+        <div class="mat-caption" style="padding: 10px;">
+          {{element.productDescription | slice:0:220 }}
+          <ng-container *ngIf="element.productDescription.length > 220">...</ng-container>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price" *ngIf="!isSmall">
+      <th mat-header-cell *matHeaderCellDef>Price</th>
+      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element">
+        <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="center center">
+          <button mat-icon-button color="primary">
+            <mat-icon>info</mat-icon>
+          </button>
+          <button mat-icon-button color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" matTooltip="Remove order">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 20,30]" [pageSize]="10" showFirstLastButtons></mat-paginator>
+</div>
+
+
+

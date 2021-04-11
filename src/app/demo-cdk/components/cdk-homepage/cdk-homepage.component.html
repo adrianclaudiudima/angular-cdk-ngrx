@@ -1,4 +1,17 @@
 <div class="cdk-homepage">
+
+  <mat-toolbar>
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <div>CDK Examples</div>
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px" class="cdk-homepage__menu">
+        <div id="refreshPlaceholder"></div>
+        <button mat-button routerLinkActive="cdk-homepage__menu--selected" routerLink="orders">Orders</button>
+        <button mat-button routerLinkActive="cdk-homepage__menu--selected" routerLink="products">Products</button>
+        <button mat-button routerLinkActive="cdk-homepage__menu--selected" routerLink="customers">Customers</button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
   <ng-container *ngIf="orders$ | async as orderState">
 
     <ng-container *ngIf="orderState.requestStatus.status === STATUS.ERROR else ordersTemplate">
@@ -48,7 +61,7 @@
       <div gdColumns.xs="100%" gdColumns.sm="100%" gdColumns="calc(50% - 10px) calc(50% - 10px)" gdGap="20px" style="margin-top: 20px;">
         <ng-container *ngIf="approvedOrdersChart$ | async as chartData">
           <div>
-            <div class="mat-title">Approved orders</div>
+            <div class="mat-title-extended">ORDERS APPROVED</div>
             <app-bar-chart
               [tooltipTitle]="'Date'"
               [tooltipBody]="'Orders approved'"
@@ -61,7 +74,7 @@
 
         <ng-container *ngIf="rejectedOrdersChart$ | async as chartData">
           <div>
-            <div class="mat-title">Rejected orders</div>
+            <div class="mat-title-extended" style="font-weight: 300;letter-spacing: 2px">ORDERS REJECTED</div>
             <app-bar-chart
               [tooltipTitle]="'Date'"
               [tooltipBody]="'Orders rejected'"
@@ -75,10 +88,7 @@
       </div>
 
       <div style="margin-top: 20px;">
-        <app-orders
-          [minDate]="orderState?.dateFilter?.minDate"
-          [maxDate]="orderState?.dateFilter?.maxDate"
-          [orders]="orderState.filteredOrders" (sortChanged)="handleSortChanged($event)" (filterByDate)="handleFilterByDate($event)"></app-orders>
+        <router-outlet></router-outlet>
       </div>
     </ng-template>
 

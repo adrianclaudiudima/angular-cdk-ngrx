@@ -1,5 +1,5 @@
-import {DomainEntity} from '../../shared/model/domain.model';
-import {Order} from '../../shared/model/order.model';
+import {DomainEntity} from '../../../shared/model/domain.model';
+import {Order} from '../../../shared/model/order.model';
 import {Moment} from 'moment';
 import {Label} from 'ng2-charts';
 import {ChartDataSets} from 'chart.js';

@@ -1,0 +1,18 @@
+@mixin cdk-homepage($config-or-theme) {
+  $config: mat-get-color-config($config-or-theme);
+  // Extract the palettes you need from the theme definition.
+  $primary: map-get($config, primary);
+  $accent: map-get($config, accent);
+  $background-palette: map-get($config, background);
+  $foreground-palette: map-get($config, foreground);
+  .cdk-homepage {
+    &__menu {
+      &--selected {
+        color: map_get($accent, default);
+      }
+
+
+    }
+
+  }
+}

@@ -1,0 +1,17 @@
+<div class="customer">
+  <ng-container *ngIf="customersState$ | async as customerState">
+    <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-bottom: 20px;">
+      <div class="mat-title-extended">
+        All customers
+      </div>
+
+      <button mat-stroked-button color="accent" (click)="refreshData()">
+        <span>Refresh data</span>
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+    <app-customer-table [customers]="customerState.domain"></app-customer-table>
+  </ng-container>
+
+
+</div>

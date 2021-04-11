@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
-import {OrderService} from '../../shared/services/order.service';
+import {OrderService} from '../../../shared/services/order.service';
 import {BehaviorSubject, forkJoin, Observable, Subject} from 'rxjs';
-import {Status} from '../../shared/model/domain.model';
+import {Status} from '../../../shared/model/domain.model';
 import {Sort} from '@angular/material/sort';
 import {Moment} from 'moment';
 import {filter, map, switchMap, take} from 'rxjs/operators';
 import {assignOrdersToMonth, convertOrdersToTotalCount, extractMinAndMaxDates, getTotalOrdersRejected, getTotalOrdersWithCompletedAndApprovedStatus, SelectedDateInterval} from './order.utils';
-import {ChartState, OrderState} from './order.model';
-import {OrderStatus} from '../../shared/model/order.model';
-import {ThemeService} from '../../core/services/theme.service';
+import {ChartState, OrderState} from './order-state.model';
+import {OrderStatus} from '../../../shared/model/order.model';
+import {ThemeService} from '../../../core/services/theme.service';
 
 const initialOrderState: OrderState = {
   domain: [],

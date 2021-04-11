@@ -20,4 +20,8 @@ export class AppComponent implements OnInit {
   }
 
 
+  logScroll($event: Event): void {
+    console.log($event);
+
+  }
 }

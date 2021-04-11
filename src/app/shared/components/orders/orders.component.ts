@@ -1,66 +1,43 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
-import {Order} from '../../model/order.model';
-import {MatPaginator} from '@angular/material/paginator';
-import {Sort} from '@angular/material/sort';
+import {Component, OnInit} from '@angular/core';
 import {Moment} from 'moment';
+import {OrderService} from '../../services/order.service';
+import {OrderStateService} from '../../../demo-cdk/services/order/order-state.service';
+import {Observable} from 'rxjs';
+import {OrderState} from '../../../demo-cdk/services/order/order-state.model';
+import {Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-orders',
   templateUrl: 'orders.component.html',
   styleUrls: ['orders.component.scss'],
 })
-export class OrdersComponent implements OnChanges, AfterViewInit {
-  displayedColumns: string[] = ['id', 'orderId', 'orderDate', 'orderStatus', 'totalProducts', 'actions'];
-  dataSource: MatTableDataSource<Order> = new MatTableDataSource<Order>([]);
+export class OrdersComponent implements OnInit {
 
-  @Input()
-  minDate;
-  @Input()
-  maxDate;
-
-  private startDate: Moment;
-
-  @Input()
-  orders: Array<Order> = [];
-
-  @Output()
-  sortChanged: EventEmitter<Sort> = new EventEmitter<Sort>();
-
-  @Output()
-  filterByDate: EventEmitter<{ dateFrom: Moment, dateTo: Moment }> = new EventEmitter<{ dateFrom: Moment; dateTo: Moment }>();
-
-  @ViewChild(MatPaginator)
-  paginator: MatPaginator;
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.orders.currentValue) {
-      this.dataSource = new MatTableDataSource<Order>(changes.orders.currentValue);
-      this.dataSource.paginator = this.paginator;
-    }
+  constructor(private orderService: OrderService, private orderStateService: OrderStateService) {
+    this.orders$ = this.orderStateService.orderState$;
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
+  orders$: Observable<OrderState>;
+  private selectedStartDate: Moment;
+
+  ngOnInit(): void {
+  }
+
+  handleSortChanged(sort: Sort): void {
+    this.orderStateService.sortOrders(sort);
   }
 
   setStartDate(date: Moment): void {
-    this.startDate = date;
+    this.selectedStartDate = date;
   }
 
-  setEndDate(date: Moment): void {
-    if (date) {
-      this.filterByDate.emit({dateFrom: this.startDate, dateTo: date});
+  setEndDate(selectedEndDate: Moment): void {
+    if (selectedEndDate) {
+      this.orderStateService.filterOrdersByDate(this.selectedStartDate, selectedEndDate);
     }
   }
-}
 
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'LL',
-  },
-  display: {
-    dateInput: 'MMMM YYYY', // this is the format showing on the input element
-    monthYearLabel: 'MMMM YYYY', // this is showing on the calendar
-  },
-};
+  refreshData(): void {
+    this.orderStateService.loadOrders();
+  }
+}

@@ -1,5 +1,5 @@
 @import '~@angular/material/theming';
-
+@import '~src/theme/typography';
 // Dark Theme text
 $light-text: #ffffff;
 $light-primary-text: $light-text;
@@ -109,6 +109,14 @@ $dark-theme-default-background: mat-dark-theme((
   )
 ));
 
-$dark-theme-updated-background: map_merge($dark-theme-default-background, (color: map_merge(map-get($dark-theme-default-background, color), (background: $mat-dark-theme-background))));
-$dark-theme-updated-foreground: map_merge($dark-theme-updated-background, (color: map_merge(map-get($dark-theme-updated-background, color), (foreground: $mat-dark-theme-foreground))));
-$dark-theme: $dark-theme-updated-foreground;
+$dark-theme-updated-background: map_merge($dark-theme-default-background,
+  (color: map_merge(
+      map-get($dark-theme-default-background, color),
+      (background: $mat-dark-theme-background))));
+$dark-theme-updated-foreground: map_merge(
+    $dark-theme-updated-background,
+    (color: map_merge(
+        map-get($dark-theme-updated-background, color),
+        (foreground: $mat-dark-theme-foreground))));
+$dark-theme-with-typography: map-merge($dark-theme-updated-foreground, (typography:$custom-typography));
+$dark-theme: $dark-theme-with-typography;

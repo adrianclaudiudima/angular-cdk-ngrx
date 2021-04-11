@@ -1,59 +1,26 @@
-<div fxLayout="row" fxLayoutAlign="space-between center">
-  <div class="mat-title">All orders</div>
-  <mat-form-field appearance="fill">
-    <mat-label>Enter a date range</mat-label>
-    <mat-date-range-input [rangePicker]="picker" [min]="minDate" [max]="maxDate">
-      <input matStartDate placeholder="Start date" (dateChange)="setStartDate($event.value)" [value]="minDate">
-      <input matEndDate placeholder="End date" (dateChange)="setEndDate($event.value)" [value]="maxDate">
-    </mat-date-range-input>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
-  </mat-form-field>
+<div class="orders">
+  <ng-container *ngIf="orders$ | async as orders">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="column" fxLayoutGap="10px">
+        <div class="mat-title-extended">ALL ORDERS</div>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker" [min]="orders?.dateFilter?.minDate" [max]="orders?.dateFilter?.maxDate">
+            <input matStartDate placeholder="Start date" (dateChange)="setStartDate($event.value)" [value]="orders?.dateFilter?.minDate">
+            <input matEndDate placeholder="End date" (dateChange)="setEndDate($event.value)" [value]="orders?.dateFilter?.maxDate">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
 
+      <button mat-stroked-button color="accent" (click)="refreshData()">
+        <span>Refresh data</span>
+        <mat-icon>refresh</mat-icon>
+      </button>
+
+    </div>
+    <app-order-table [orders]="orders.filteredOrders" (sortChanged)="handleSortChanged($event)"></app-order-table>
+  </ng-container>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z1" matSort (matSortChange)="sortChanged.emit($event)">
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> No.</th>
-    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="orderId">
-    <th mat-header-cell *matHeaderCellDef> Order ID</th>
-    <td mat-cell *matCellDef="let element"> #{{element.orderId}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="orderDate">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Date</th>
-    <td mat-cell *matCellDef="let element"> {{element.orderDate | date:'d MMMM yyyy' }} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="orderStatus">
-    <th mat-header-cell *matHeaderCellDef> Order Status</th>
-    <td mat-cell *matCellDef="let element"> {{element.orderStatus}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="totalProducts">
-    <th mat-header-cell *matHeaderCellDef>Total Products</th>
-    <td mat-cell *matCellDef="let element"> {{element.total}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef>Action</th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-icon-button color="primary">
-        <mat-icon>info</mat-icon>
-      </button>
-      <button mat-icon-button color="primary">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-icon-button color="primary" matTooltip="Remove order">
-        <mat-icon>delete</mat-icon>
-      </button>
-
-    </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-<mat-paginator [pageSizeOptions]="[10, 20,30]" [pageSize]="10" showFirstLastButtons></mat-paginator>

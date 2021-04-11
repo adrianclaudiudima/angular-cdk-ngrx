@@ -15,7 +15,7 @@ import {ThemeService} from './services/theme.service';
   imports: [
     SharedModule,
     CommonModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   exports: [
     HeaderComponent,

@@ -1,0 +1,15 @@
+<div class="products">
+  <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-bottom: 20px;">
+    <div class="mat-title-extended">
+      All products
+    </div>
+    <button mat-stroked-button color="accent" (click)="refreshProducts()">
+      <span>Refresh data</span>
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+
+  <ng-container *ngIf="productState$ | async as productState">
+    <app-product-table [products]="productState.filteredProducts"></app-product-table>
+  </ng-container>
+</div>

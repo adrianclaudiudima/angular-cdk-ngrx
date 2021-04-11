@@ -1,11 +1,7 @@
-import {Order, OrderStatus} from '../../shared/model/order.model';
+import {Order, OrderStatus} from '../../../shared/model/order.model';
 import {Moment} from 'moment';
 import {Label} from 'ng2-charts';
 
-
-export function getMonthDifference(dateFrom: Date, dateTo: Date): number {
-  return dateTo.getMonth() - dateFrom.getMonth() + (12 * (dateTo.getFullYear() - dateFrom.getFullYear()));
-}
 
 export function extractMinAndMaxDates(orders: Array<Order>): SelectedDateInterval {
   let minDate: Moment;

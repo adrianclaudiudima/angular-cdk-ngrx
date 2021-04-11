@@ -45,6 +45,16 @@ import {ChartsModule} from 'ng2-charts';
 import {BarChartComponent} from './components/bar-chart/bar-chart.component';
 import {OrdersComponent} from './components/orders/orders.component';
 import {MatSortModule} from '@angular/material/sort';
+import {OrderTableComponent} from './components/orders/order-table/order-table.component';
+import {ProductsComponent} from './components/products/products.component';
+import {CustomerComponent} from './components/customers/customer.component';
+import {ProductsTableComponent} from './components/products/products-table/products-table.component';
+import {PortalModule} from '@angular/cdk/portal';
+import {DomPortalComponent} from './components/dom-portal/dom-portal.component';
+import {CustomerTableComponent} from './components/customers/customer-table/customer-table.component';
+import {OverlayConnectedService} from './lib/overlay/connected/overlay-connected.service';
+import {OverlayGlobalService} from './lib/overlay/global/overlay-global.service';
+import {ProductWidgetComponent} from './components/products/product-widget/product-widget.component';
 
 const materialDependencies = [
   MatAutocompleteModule,
@@ -83,6 +93,7 @@ const materialDependencies = [
   MatSortModule,
   MatAutocompleteModule,
   OverlayModule,
+  PortalModule
 ];
 
 @NgModule({
@@ -90,7 +101,14 @@ const materialDependencies = [
     CardWidgetComponent,
     BarChartComponent,
     OrdersComponent,
-    CardWidgetIconDirective
+    OrderTableComponent,
+    ProductsComponent,
+    ProductsTableComponent,
+    CardWidgetIconDirective,
+    CustomerComponent,
+    DomPortalComponent,
+    CustomerTableComponent,
+    ProductWidgetComponent,
   ],
   imports: [
     CommonModule,
@@ -106,12 +124,21 @@ const materialDependencies = [
     CardWidgetComponent,
     CardWidgetIconDirective,
     BarChartComponent,
-    OrdersComponent
+    OrdersComponent,
+    OrderTableComponent,
+    ProductsComponent,
+    ProductsTableComponent,
+    CustomerComponent,
+    CustomerTableComponent,
+    DomPortalComponent,
+    ProductWidgetComponent
   ],
   providers: [
     ProductService,
     OrderService,
-    CustomerService
+    CustomerService,
+    OverlayConnectedService,
+    OverlayGlobalService
   ]
 })
 export class SharedModule {

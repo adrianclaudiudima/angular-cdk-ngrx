@@ -1,0 +1,30 @@
+@import '~src/app/app.theme';
+@import '~src/app/core/component/header/header.theme';
+@import '~src/app/shared/components/card-widget/card-widget.theme';
+@import '~src/app/shared/components/products/product-widget/product-widget.theme';
+@import '~src/app/demo-cdk/components/cdk-homepage/cdk-homepage.theme';
+
+@mixin component-themes($theme-or-config) {
+
+  @include app-theme($theme-or-config);
+  @include app-header-color-mixin($theme-or-config);
+  @include app-card-widget($theme-or-config);
+  @include cdk-homepage($theme-or-config);
+  @include root-mixin($theme-or-config);
+  @include app-product-widget($theme-or-config);
+}
+
+@mixin root-mixin($theme) {
+  $typography: mat-get-typography-config($theme);
+
+  .mat-title-extended {
+    font: {
+      family: mat-font-family($typography, title);
+      size: mat-font-size($typography, title);
+      weight: 300;
+    }
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+}

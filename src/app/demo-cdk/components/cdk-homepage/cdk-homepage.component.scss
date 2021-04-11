@@ -1,6 +1,9 @@
 .cdk-homepage {
-  margin-top: 40px;
   width: 100%;
+
+  mat-toolbar {
+    margin-bottom: 20px;
+  }
 
   &__cards {
 
@@ -8,4 +11,6 @@
       cursor: pointer;
     }
   }
+
+  padding-bottom: 50px;
 }

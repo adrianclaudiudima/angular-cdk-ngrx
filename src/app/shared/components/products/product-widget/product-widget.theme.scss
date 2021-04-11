@@ -1,0 +1,17 @@
+@import '~@angular/material/theming';
+
+@mixin app-product-widget($config-or-theme) {
+
+  $config: mat-get-color-config($config-or-theme);
+  // Extract the palettes you need from the theme definition.
+  $primary: map-get($config, primary);
+  $accent: map-get($config, accent);
+  $background-palette: map-get($config, background);
+  $foreground-palette: map-get($config, foreground);
+
+  .product-widget-overlay {
+    background: lighten(map_get($background-palette, card), 5%);
+    color: map_get($foreground-palette, text);
+  }
+
+}

@@ -1,17 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {OrderService} from '../../../shared/services/order.service';
-import {OrderStateService} from '../../services/order-state.service';
+import {OrderStateService} from '../../services/order/order-state.service';
 import {Observable} from 'rxjs';
+import {ChartState, OrderState} from '../../services/order/order-state.model';
 import {Status} from '../../../shared/model/domain.model';
-import {Sort} from '@angular/material/sort';
-import {Moment} from 'moment';
-import {ChartState, OrderState} from '../../services/order.model';
 
 
 @Component({
   selector: 'app-cdk-homepage',
   templateUrl: 'cdk-homepage.component.html',
-  styleUrls: ['cdk-homepage.component.scss']
+  styleUrls: ['cdk-homepage.component.scss', 'cdk-homepage.theme.scss']
 })
 export class CdkHomepageComponent implements OnInit {
 
@@ -41,14 +39,6 @@ export class CdkHomepageComponent implements OnInit {
 
   loadOrders(): void {
     this.orderStateService.loadOrders();
-  }
-
-  handleSortChanged(sort: Sort): void {
-    this.orderStateService.sortOrders(sort);
-  }
-
-  handleFilterByDate(dates: { dateFrom: Moment; dateTo: Moment }): void {
-    this.orderStateService.filterOrdersByDate(dates.dateFrom, dates.dateTo);
   }
 
 }
