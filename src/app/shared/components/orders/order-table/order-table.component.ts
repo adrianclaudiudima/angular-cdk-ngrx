@@ -3,6 +3,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {Order} from '../../../model/order.model';
 import {Sort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
+import {OverlayGlobalService} from '../../../lib/overlay/global/overlay-global.service';
 
 @Component({
   selector: 'app-order-table',
@@ -13,16 +14,15 @@ export class OrderTableComponent implements OnChanges, AfterViewInit {
 
   displayedColumns: string[] = ['id', 'orderId', 'orderDate', 'orderStatus', 'totalProducts', 'actions'];
   dataSource: MatTableDataSource<Order> = new MatTableDataSource<Order>([]);
-
   @Input()
   orders: Array<Order> = [];
-
   @Output()
   sortChanged: EventEmitter<Sort> = new EventEmitter<Sort>();
-
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
 
+  constructor(private globalOverlay: OverlayGlobalService) {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.orders.currentValue) {
@@ -35,5 +35,7 @@ export class OrderTableComponent implements OnChanges, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-
+  openOrder(): void {
+    // implement ...
+  }
 }

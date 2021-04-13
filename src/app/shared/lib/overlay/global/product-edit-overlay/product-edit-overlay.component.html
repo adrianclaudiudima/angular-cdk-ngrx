@@ -1,0 +1,48 @@
+<div class="product-edit">
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <app-dom-portal selector="#right-menu-placeholder">
+      <div class="mat-title-extended">Edit product</div>
+    </app-dom-portal>
+
+  </div>
+  <form
+    class="product-edit__form"
+    *ngIf="product$ | async as product"
+    #productForm="ngForm" style="margin-top: 20px;"
+    (ngSubmit)="updateProduct(productForm)">
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Product name</mat-label>
+      <input
+        #productName='ngModel'
+        matInput
+        name="productName"
+        required
+        [ngModel]="product.productName"
+      >
+      <mat-error *ngIf="productName.hasError('required')">Product name is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Product description</mat-label>
+      <textarea
+        #productDescription='ngModel'
+        matInput
+        [ngModel]="product.productDescription"
+        [matTextareaAutosize]="true"
+        name="productDescription">
+      </textarea>
+      <mat-error *ngIf="productDescription.hasError('required')">Product description is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Product price</mat-label>
+      <input
+        matInput [ngModel]="product.price"
+        type="number"
+        required
+        name="price"
+        #price='ngModel'
+      >
+      <mat-error *ngIf="price.hasError('required')">Price is required</mat-error>
+    </mat-form-field>
+    <button type="submit" mat-raised-button color="primary" style="width: 100%; margin-top: 20px;">Update Product</button>
+  </form>
+</div>

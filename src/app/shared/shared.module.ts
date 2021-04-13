@@ -55,6 +55,11 @@ import {CustomerTableComponent} from './components/customers/customer-table/cust
 import {OverlayConnectedService} from './lib/overlay/connected/overlay-connected.service';
 import {OverlayGlobalService} from './lib/overlay/global/overlay-global.service';
 import {ProductWidgetComponent} from './components/products/product-widget/product-widget.component';
+import {RightMenuOverlayComponent} from './lib/overlay/global/right-menu-overlay/right-menu-overlay.component';
+import {RightMenuOverlayPlaceholderDirective} from './lib/overlay/global/right-menu-overlay/right-menu-overlay-placeholder.directive';
+import {ProductEditOverlayComponent} from './lib/overlay/global/product-edit-overlay/product-edit-overlay.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {OrderEditOverlayComponent} from './lib/overlay/global/order-edit-overlay/order-edit-overlay.component';
 
 const materialDependencies = [
   MatAutocompleteModule,
@@ -109,17 +114,25 @@ const materialDependencies = [
     DomPortalComponent,
     CustomerTableComponent,
     ProductWidgetComponent,
+    RightMenuOverlayComponent,
+    RightMenuOverlayPlaceholderDirective,
+    ProductEditOverlayComponent,
+    OrderEditOverlayComponent
   ],
   imports: [
     CommonModule,
     FlexLayoutModule,
     ChartsModule,
+    FormsModule,
+    ReactiveFormsModule,
     materialDependencies
   ],
   exports: [
     FlexLayoutModule,
     ChartsModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     materialDependencies,
     CardWidgetComponent,
     CardWidgetIconDirective,
@@ -131,7 +144,10 @@ const materialDependencies = [
     CustomerComponent,
     CustomerTableComponent,
     DomPortalComponent,
-    ProductWidgetComponent
+    ProductWidgetComponent,
+    RightMenuOverlayComponent,
+    ProductEditOverlayComponent,
+    OrderEditOverlayComponent
   ],
   providers: [
     ProductService,

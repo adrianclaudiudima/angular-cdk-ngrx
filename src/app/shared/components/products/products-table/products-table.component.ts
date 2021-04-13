@@ -6,6 +6,7 @@ import {Product} from '../../../model/product.model';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {merge, Subscription} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
+import {OverlayGlobalService} from '../../../lib/overlay/global/overlay-global.service';
 
 @Component({
   selector: 'app-product-table',
@@ -18,8 +19,14 @@ export class ProductsTableComponent implements OnChanges, AfterViewInit, OnDestr
   dataSource: MatTableDataSource<Product> = new MatTableDataSource<Product>([]);
   isSmall = false;
   responsiveSubscription: Subscription;
+  @Input()
+  products: Array<Product> = [];
+  @Output()
+  sortChanged: EventEmitter<Sort> = new EventEmitter<Sort>();
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator;
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private globalOverlayService: OverlayGlobalService) {
     this.responsiveSubscription = merge(
       breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).pipe(
         filter(v => v.matches),
@@ -35,16 +42,6 @@ export class ProductsTableComponent implements OnChanges, AfterViewInit, OnDestr
     });
 
   }
-
-  @Input()
-  products: Array<Product> = [];
-
-  @Output()
-  sortChanged: EventEmitter<Sort> = new EventEmitter<Sort>();
-
-  @ViewChild(MatPaginator)
-  paginator: MatPaginator;
-
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.products.currentValue) {
@@ -62,4 +59,7 @@ export class ProductsTableComponent implements OnChanges, AfterViewInit, OnDestr
   }
 
 
+  showGlobalOverlay(id: number): void {
+    // implement
+  }
 }

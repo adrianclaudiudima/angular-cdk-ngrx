@@ -1,0 +1,50 @@
+<div class="order-edit">
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <div class="mat-title-extended">Edit order</div>
+  </div>
+  <form
+    class="product-edit__form"
+    *ngIf="order$ | async as order"
+    #orderForm="ngForm" style="margin-top: 20px;"
+    (ngSubmit)="updateOrder(orderForm)">
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Order id</mat-label>
+      <input
+        #orderId='ngModel'
+        matInput
+        name="orderId"
+        required
+        disabled
+        [ngModel]="order.orderId"
+      >
+      <mat-error *ngIf="orderId.hasError('required')">Product name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-select [ngModel]="order.orderStatus" name="orderStatus">
+        <mat-option *ngFor="let item of orderStatuses " [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div gdColumns="calc(50% - 10px) calc(50% - 10px)" gdGap="20px">
+      <div *ngFor="let orderData of order.orderData">
+        <div fxLayout="column" fxLayoutAlign="start start" class="mat-elevation-z2 mat-card">
+          <div class="mat-body-2" fxLayout="row">
+            <div class="mat-subheading-1" fxFlex="100px">Product Id</div>
+            <div class="mat-body-2">{{orderData.productId}}</div>
+          </div>
+          <div class="mat-body-2" fxLayout="row">
+            <div class="mat-subheading-1" fxFlex="100px">Quantity</div>
+            <div class="mat-body-2">{{orderData.quantity}}</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <button type="submit" mat-raised-button color="primary" style="width: 100%; margin-top: 20px;">Update Order</button>
+  </form>
+</div>

@@ -2,6 +2,7 @@
 @import '~src/app/core/component/header/header.theme';
 @import '~src/app/shared/components/card-widget/card-widget.theme';
 @import '~src/app/shared/components/products/product-widget/product-widget.theme';
+@import '~src/app/shared/lib/overlay/global/right-menu-overlay/right-menu-overlay.theme';
 @import '~src/app/demo-cdk/components/cdk-homepage/cdk-homepage.theme';
 
 @mixin component-themes($theme-or-config) {
@@ -12,6 +13,7 @@
   @include cdk-homepage($theme-or-config);
   @include root-mixin($theme-or-config);
   @include app-product-widget($theme-or-config);
+  @include right-menu-overlay($theme-or-config)
 }
 
 @mixin root-mixin($theme) {
