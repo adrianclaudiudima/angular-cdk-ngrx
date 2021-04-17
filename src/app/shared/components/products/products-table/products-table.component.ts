@@ -7,6 +7,9 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {merge, Subscription} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
 import {OverlayGlobalService} from '../../../lib/overlay/global/overlay-global.service';
+import {OverlayConnectedService} from '../../../lib/overlay/connected/overlay-connected.service';
+import {CdkOverlayOrigin} from '@angular/cdk/overlay';
+import {ProductEditOverlayComponent} from '../../../lib/overlay/global/product-edit-overlay/product-edit-overlay.component';
 
 @Component({
   selector: 'app-product-table',
@@ -26,7 +29,7 @@ export class ProductsTableComponent implements OnChanges, AfterViewInit, OnDestr
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
 
-  constructor(private breakpointObserver: BreakpointObserver, private globalOverlayService: OverlayGlobalService) {
+  constructor(private breakpointObserver: BreakpointObserver, private globalOverlayService: OverlayGlobalService, private connectedToOverlayService: OverlayConnectedService) {
     this.responsiveSubscription = merge(
       breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).pipe(
         filter(v => v.matches),
@@ -60,6 +63,13 @@ export class ProductsTableComponent implements OnChanges, AfterViewInit, OnDestr
 
 
   showGlobalOverlay(id: number): void {
-    // implement
+    this.globalOverlayService.openGlobalOverlay<ProductEditOverlayComponent>(ProductEditOverlayComponent, {productId: id});
+  }
+
+  showProductOverlay(infoElement: CdkOverlayOrigin, productId: number): void {
+    this.connectedToOverlayService.openConnectedToElementOverlay(infoElement.elementRef, {
+      productId
+    });
+
   }
 }

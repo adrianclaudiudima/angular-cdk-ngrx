@@ -21,7 +21,7 @@ export class OrderEditOverlayComponent extends RightMenuAbstractComponent implem
   }
 
   ngOnInit(): void {
-    this.order$ = this.httpClient.get<Order>('http://localhost:4200/api/order/1');
+    this.order$ = this.httpClient.get<Order>(`http://localhost:4200/api/order/${this.data.orderId}`);
   }
 
 

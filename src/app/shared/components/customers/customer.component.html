@@ -5,10 +5,13 @@
         All customers
       </div>
 
-      <button mat-stroked-button color="accent" (click)="refreshData()">
-        <span>Refresh data</span>
-        <mat-icon>refresh</mat-icon>
-      </button>
+      <app-dom-portal selector="#refreshPlaceholder">
+        <button mat-stroked-button color="accent" (click)="refreshData()">
+          <span>Refresh data</span>
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </app-dom-portal>
+
     </div>
     <app-customer-table [customers]="customerState.domain"></app-customer-table>
   </ng-container>

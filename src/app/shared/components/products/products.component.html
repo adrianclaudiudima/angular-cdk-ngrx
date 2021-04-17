@@ -3,10 +3,12 @@
     <div class="mat-title-extended">
       All products
     </div>
-    <button mat-stroked-button color="accent" (click)="refreshProducts()">
-      <span>Refresh data</span>
-      <mat-icon>refresh</mat-icon>
-    </button>
+    <app-dom-portal selector="#refreshPlaceholder">
+      <button mat-stroked-button color="accent" (click)="refreshProducts()">
+        <span>Refresh data</span>
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </app-dom-portal>
   </div>
 
   <ng-container *ngIf="productState$ | async as productState">

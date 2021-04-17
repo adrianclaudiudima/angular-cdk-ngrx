@@ -4,6 +4,7 @@ import {Order} from '../../../model/order.model';
 import {Sort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {OverlayGlobalService} from '../../../lib/overlay/global/overlay-global.service';
+import {OrderEditOverlayComponent} from '../../../lib/overlay/global/order-edit-overlay/order-edit-overlay.component';
 
 @Component({
   selector: 'app-order-table',
@@ -35,7 +36,7 @@ export class OrderTableComponent implements OnChanges, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  openOrder(): void {
-    // implement ...
+  openOrder(orderId: number): void {
+    this.globalOverlay.openGlobalOverlay<OrderEditOverlayComponent>(OrderEditOverlayComponent, {orderId});
   }
 }

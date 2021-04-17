@@ -1,0 +1,25 @@
+<div class="right-menu-overlay">
+
+  <div fxLayout="row" style="height: 100%">
+    <div class="right-menu-overlay__left" (click)="closeOverlay()" fxFlex.xs="0" fxFlex="100%">
+
+    </div>
+    <div class="right-menu-overlay__right mat-elevation-z5" fxFlex.xs="100" fxFlex="500px">
+
+      <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-bottom: 20px">
+        <div fxLayout="center center" fxLayoutGap="5px">
+          <button mat-icon-button color="primary" (click)="closeOverlay()">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+        </div>
+        <div id="right-menu-placeholder"></div>
+      </div>
+      <ng-template appRightMenuOverlayPlaceholder></ng-template>
+
+    </div>
+
+
+  </div>
+
+
+</div>

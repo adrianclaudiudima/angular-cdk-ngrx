@@ -19,11 +19,12 @@ export class ProductEditOverlayComponent extends RightMenuAbstractComponent impl
   }
 
   ngOnInit(): void {
-    this.product$ = this.httpClient.get<Product>('http://localhost:4200/api/product/1');
+    this.product$ = this.httpClient.get<Product>(`http://localhost:4200/api/product/${this.data.productId}`);
   }
 
 
   updateProduct(productForm: NgForm): void {
-    console.log(productForm);
+    this.disposeComponentEvent.emit(true);
   }
+
 }
