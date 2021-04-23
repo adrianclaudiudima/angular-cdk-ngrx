@@ -35,6 +35,8 @@ export class CdkHomepageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadOrders();
+    this.loadOrders();
+    this.loadOrders();
   }
 
   loadOrders(): void {

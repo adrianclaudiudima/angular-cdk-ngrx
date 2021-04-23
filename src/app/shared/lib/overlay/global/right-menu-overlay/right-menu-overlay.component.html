@@ -1,6 +1,9 @@
 <div class="right-menu-overlay">
 
-  <div fxLayout="row" style="height: 100%">
+  <div fxLayout="row" style="height: 100%"
+       [@fadeInOut]="shown ? 'shown':'hidden'"
+       (@fadeInOut.done)="handleAnimationCompleted($event)"
+  >
     <div class="right-menu-overlay__left" (click)="closeOverlay()" fxFlex.xs="0" fxFlex="100%">
 
     </div>

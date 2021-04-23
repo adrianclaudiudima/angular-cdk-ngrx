@@ -20,7 +20,13 @@
       </button>
 
     </div>
-    <app-order-table [orders]="orders.filteredOrders" (sortChanged)="handleSortChanged($event)"></app-order-table>
+    <app-order-table
+      [orders]="orders.filteredOrders"
+      (sortChanged)="handleSortChanged($event)"
+      (openOrderEvent)="handleOpenOrderEvent($event)"
+    >
+    </app-order-table>
   </ng-container>
 </div>
+<router-outlet></router-outlet>
 

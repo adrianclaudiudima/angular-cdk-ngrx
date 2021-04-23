@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {OrderState} from '../../../demo-cdk/services/order/order-state.model';
 import {Sort} from '@angular/material/sort';
 import {CdkPortal, DomPortalOutlet} from '@angular/cdk/portal';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -15,7 +16,8 @@ import {CdkPortal, DomPortalOutlet} from '@angular/cdk/portal';
 export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private orderService: OrderService, private orderStateService: OrderStateService,
-              private applicationRef: ApplicationRef, private injector: Injector, private componentFactoryResolver: ComponentFactoryResolver
+              private applicationRef: ApplicationRef, private injector: Injector, private componentFactoryResolver: ComponentFactoryResolver,
+              private router: Router, private activatedRoute: ActivatedRoute
   ) {
     this.orders$ = this.orderStateService.orderState$;
   }
@@ -61,4 +63,7 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.host.detach();
   }
 
+  handleOpenOrderEvent(orderId: number): void {
+    this.router.navigate([orderId], {relativeTo: this.activatedRoute});
+  }
 }

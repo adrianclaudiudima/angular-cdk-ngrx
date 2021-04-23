@@ -34,7 +34,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {OverlayModule} from '@angular/cdk/overlay';
-import {HttpClientModule} from '@angular/common/http';
 import {ProductService} from './services/product.service';
 import {OrderService} from './services/order.service';
 import {CustomerService} from './services/customer.service';
@@ -60,6 +59,8 @@ import {RightMenuOverlayPlaceholderDirective} from './lib/overlay/global/right-m
 import {ProductEditOverlayComponent} from './lib/overlay/global/product-edit-overlay/product-edit-overlay.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {OrderEditOverlayComponent} from './lib/overlay/global/order-edit-overlay/order-edit-overlay.component';
+import {RouterModule} from '@angular/router';
+import {OrderEditComponent} from './components/orders/order-edit/order-edit.component';
 
 const materialDependencies = [
   MatAutocompleteModule,
@@ -117,7 +118,8 @@ const materialDependencies = [
     RightMenuOverlayComponent,
     RightMenuOverlayPlaceholderDirective,
     ProductEditOverlayComponent,
-    OrderEditOverlayComponent
+    OrderEditOverlayComponent,
+    OrderEditComponent
   ],
   imports: [
     CommonModule,
@@ -125,12 +127,12 @@ const materialDependencies = [
     ChartsModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule.forChild([]),
     materialDependencies
   ],
   exports: [
     FlexLayoutModule,
     ChartsModule,
-    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     materialDependencies,

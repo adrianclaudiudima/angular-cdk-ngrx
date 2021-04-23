@@ -4,6 +4,7 @@ import {CdkHomepageComponent} from './components/cdk-homepage/cdk-homepage.compo
 import {OrdersComponent} from '../shared/components/orders/orders.component';
 import {ProductsComponent} from '../shared/components/products/products.component';
 import {CustomerComponent} from '../shared/components/customers/customer.component';
+import {OrderEditComponent} from '../shared/components/orders/order-edit/order-edit.component';
 
 const cdkRoutes: Routes = [
   {
@@ -17,7 +18,14 @@ const cdkRoutes: Routes = [
       },
       {
         path: 'orders',
-        component: OrdersComponent
+        component: OrdersComponent,
+        children: [
+          {
+            path: ':id',
+            component: OrderEditComponent,
+            pathMatch: 'full'
+          }
+        ]
       },
       {
         path: 'customers',
