@@ -1,0 +1,16 @@
+.cdk-homepage {
+  width: 100%;
+
+  mat-toolbar {
+    margin-bottom: 20px;
+  }
+
+  &__cards {
+
+    app-card-widget {
+      cursor: pointer;
+    }
+  }
+
+  padding-bottom: 50px;
+}

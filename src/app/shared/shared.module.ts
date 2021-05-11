@@ -133,6 +133,7 @@ const materialDependencies = [
     materialDependencies
   ],
   exports: [
+    CommonModule,
     FlexLayoutModule,
     ChartsModule,
     FormsModule,

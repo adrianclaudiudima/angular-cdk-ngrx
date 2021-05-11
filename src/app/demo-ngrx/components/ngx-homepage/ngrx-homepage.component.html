@@ -1,1 +1,100 @@
-<div class="mat-display-1">NGRX Homepage</div>
+<div class="cdk-homepage">
+
+  <mat-toolbar>
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <div>NG-RX Examples</div>
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px" class="cdk-homepage__menu">
+        <div id="refreshPlaceholder"></div>
+        <button mat-button routerLinkActive="cdk-homepage__menu--selected" routerLink="orders">Orders</button>
+        <button mat-button routerLinkActive="cdk-homepage__menu--selected" routerLink="products">Products</button>
+        <button mat-button routerLinkActive="cdk-homepage__menu--selected" routerLink="customers">Customers</button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <ng-container *ngIf="orderState$ | async as orderState">
+
+    <ng-container *ngIf="orderState.requestStatus.status === STATUS.ERROR else ordersTemplate">
+      <div fxLayout="row" fxLayoutAlign="center center" style="margin-top: 120px">
+        <mat-card style="max-width: 300px; text-align: center;padding: 30px ;">
+          <div class="mat-title">Something went wrong</div>
+          <div class="mat-body-1">Your request could not be processed. Please try again.</div>
+          <button mat-stroked-button color="warn" style="margin-top: 20px;min-width: 150px;" (click)="loadOrders()">Retry</button>
+        </mat-card>
+      </div>
+    </ng-container>
+
+    <ng-template #ordersTemplate>
+      <div class="cdk-homepage__cards"
+           gdColumns.xs="calc(50% - 5px) calc(50% - 5px)" gdGap.xs="10px"
+           gdColumns="calc(25% - 3px) calc(25% - 3px) calc(25% - 3px) calc(25% - 3px)" gdGap="12px"
+      >
+        <ng-container *ngIf="totalSells$ | async as total">
+          <app-card-widget [title]="'Products sold'" [description]="total.toString() " fxFlex="calc(25%-20px)" fxFlex.xs="calc(50%-20px)">
+            <mat-icon appCardWidgetIcon style="font-size: 60px; width: 60px;height: 60px;">price_check</mat-icon>
+          </app-card-widget>
+        </ng-container>
+
+
+        <ng-container *ngIf="rejectedSells$ | async as rejected">
+          <app-card-widget [title]="'Products returned'" [description]="rejected.toString()" fxFlex="calc(25%-20px)" fxFlex.xs="calc(50%-20px)">
+            <mat-icon appCardWidgetIcon style="font-size: 60px; width: 60px;height: 60px;">highlight_off</mat-icon>
+          </app-card-widget>
+        </ng-container>
+
+        <ng-container *ngIf="totalCustomers$ | async as customers">
+          <app-card-widget [title]="'Customers'" [description]="customers.toString()" fxFlex="calc(25%-20px)" fxFlex.xs="calc(50%-20px)">
+            <mat-icon appCardWidgetIcon style="font-size: 60px; width: 60px;height: 60px;">perm_identity</mat-icon>
+          </app-card-widget>
+        </ng-container>
+
+
+        <ng-container *ngIf="soldVsRejected$ | async as soldVsRejected">
+          <app-card-widget [title]="'Sold vs Returned'" [description]="soldVsRejected.toFixed(2) + ' %'" fxFlex="calc(25%-20px)" fxFlex.xs="calc(50%-20px)">
+            <mat-icon appCardWidgetIcon style="font-size: 60px; width: 60px;height: 60px;">assignment_turned_in</mat-icon>
+          </app-card-widget>
+        </ng-container>
+
+
+      </div>
+
+      <div gdColumns.xs="100%" gdColumns.sm="100%" gdColumns="calc(50% - 10px) calc(50% - 10px)" gdGap="20px" style="margin-top: 20px;">
+        <ng-container *ngIf="approvedOrdersChart$ | async as chartData">
+          <div>
+            <div class="mat-title-extended">ORDERS APPROVED</div>
+            <app-bar-chart
+              [tooltipTitle]="'Date'"
+              [tooltipBody]="'Orders approved'"
+              [barChartData]="chartData.data"
+              [barChartLabels]="chartData.label">
+            </app-bar-chart>
+          </div>
+
+        </ng-container>
+
+        <ng-container *ngIf="rejectedOrdersChart$ | async as chartData">
+          <div>
+            <div class="mat-title-extended" style="font-weight: 300;letter-spacing: 2px">ORDERS REJECTED</div>
+            <app-bar-chart
+              [tooltipTitle]="'Date'"
+              [tooltipBody]="'Orders rejected'"
+              [barChartData]="chartData.data"
+              [barChartLabels]="chartData.label">
+            </app-bar-chart>
+          </div>
+
+        </ng-container>
+
+      </div>
+
+      <div style="margin-top: 20px;">
+        <router-outlet></router-outlet>
+      </div>
+    </ng-template>
+
+  </ng-container>
+
+</div>
+
+
+
