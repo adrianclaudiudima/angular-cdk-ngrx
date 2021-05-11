@@ -5,7 +5,7 @@
         <div class="mat-title-extended">ALL ORDERS</div>
         <mat-form-field appearance="fill">
           <mat-label>Enter a date range</mat-label>
-          <mat-date-range-input [rangePicker]="picker" [min]="orders?.dateFilter?.minDate" [max]="orders?.dateFilter?.maxDate">
+          <mat-date-range-input [rangePicker]="picker" [min]="minDate" [max]="maxDate">
             <input matStartDate placeholder="Start date" (dateChange)="setStartDate($event.value)" [value]="orders?.dateFilter?.minDate">
             <input matEndDate placeholder="End date" (dateChange)="setEndDate($event.value)" [value]="orders?.dateFilter?.maxDate">
           </mat-date-range-input>
@@ -20,12 +20,15 @@
       </button>
 
     </div>
-    <app-order-table
-      [orders]="orders.filteredOrders"
-      (sortChanged)="handleSortChanged($event)"
-      (openOrderEvent)="handleOpenOrderEvent($event)"
-    >
-    </app-order-table>
+    <ng-container *ngIf="filteredOrders$ | async as filteredOrders">
+      <app-order-table
+        [orders]="filteredOrders"
+        (sortChanged)="handleSortChanged($event)"
+        (openOrderEvent)="handleOpenOrderEvent($event)"
+      >
+      </app-order-table>
+    </ng-container>
+
   </ng-container>
 </div>
 <router-outlet></router-outlet>

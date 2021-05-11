@@ -3,18 +3,17 @@ import {OrderService} from '../../../shared/services/order.service';
 import {BehaviorSubject, forkJoin, Observable, Subject} from 'rxjs';
 import {Status} from '../../../shared/model/domain.model';
 import {Sort} from '@angular/material/sort';
-import {Moment} from 'moment';
 import {filter, map, switchMap, take} from 'rxjs/operators';
-import {assignOrdersToMonth, convertOrdersToTotalCount, extractMinAndMaxDates, getTotalOrdersRejected, getTotalOrdersWithCompletedAndApprovedStatus, SelectedDateInterval} from './order.utils';
+import {assignOrdersToMonth, convertOrdersToTotalCount, extractMinAndMaxDates, filterOrders, getTotalOrdersRejected, getTotalOrdersWithCompletedAndApprovedStatus, SelectedDateInterval, sortOrders} from './order.utils';
 import {ChartState, OrderState} from './order-state.model';
-import {OrderStatus} from '../../../shared/model/order.model';
+import {Order, OrderStatus} from '../../../shared/model/order.model';
 import {ThemeService} from '../../../core/services/theme.service';
 
 const initialOrderState: OrderState = {
   domain: [],
-  filteredOrders: [],
   requestStatus: {status: Status.NEW},
-  dateFilter: undefined
+  dateFilter: undefined,
+  sort: undefined
 };
 
 @Injectable()
@@ -24,10 +23,20 @@ export class OrderStateService {
   private orderStateSubject: Subject<OrderState> = new BehaviorSubject(initialOrderState);
   public orderState$: Observable<OrderState> = this.orderStateSubject.asObservable();
 
-  public totalCustomers$: Observable<number> = this.orderState$.pipe(
+  public ordersFiltered$: Observable<Array<Order>> = this.orderState$.pipe(
+    filter(state => state.domain.length > 0),
     map(orderState => {
+      let filteredOrders = filterOrders(orderState.domain, {dateTo: orderState.dateFilter.selectedMaxDate, dateFrom: orderState.dateFilter.selectedMinDate});
+      if (orderState.sort.active && orderState.sort.active === 'orderDate' && orderState.sort.direction !== '') {
+        filteredOrders = sortOrders(filteredOrders, orderState.sort);
+      }
+      return filteredOrders;
+    })
+  );
+  public totalCustomers$: Observable<number> = this.ordersFiltered$.pipe(
+    map(filteredOrders => {
       const customerIds: Array<number> = [];
-      orderState.filteredOrders.forEach(order => {
+      filteredOrders.forEach(order => {
         if (!customerIds.find(cId => cId === order.customerId)) {
           customerIds.push(order.customerId);
         }
@@ -36,8 +45,8 @@ export class OrderStateService {
     })
   );
 
-  public totalProductsSold$: Observable<number> = this.orderState$.pipe(map(orderState => getTotalOrdersWithCompletedAndApprovedStatus(orderState.filteredOrders)));
-  public totalProductsRejected$: Observable<number> = this.orderState$.pipe(map(orderState => getTotalOrdersRejected(orderState.filteredOrders)));
+  public totalProductsSold$: Observable<number> = this.ordersFiltered$.pipe(map(filteredOrders => getTotalOrdersWithCompletedAndApprovedStatus(filteredOrders)));
+  public totalProductsRejected$: Observable<number> = this.ordersFiltered$.pipe(map(filteredOrders => getTotalOrdersRejected(filteredOrders)));
   public soldVsRejected$: Observable<number> = this.orderState$.pipe(
     switchMap(() => forkJoin([this.totalProductsSold$.pipe(take(1)), this.totalProductsRejected$.pipe(take(1))])),
     map(([sold, rejected]) => (100 * (sold - rejected)) / sold));
@@ -45,10 +54,8 @@ export class OrderStateService {
   private ordersPerMonth$ = this.orderState$.pipe(
     filter(orderState => orderState.dateFilter !== undefined),
     map(orderState => {
-      return assignOrdersToMonth({
-        minDate: orderState.dateFilter.selectedMinDate,
-        maxDate: orderState.dateFilter.selectedMaxDate
-      }, orderState.filteredOrders);
+      return assignOrdersToMonth({minDate: orderState.dateFilter.selectedMinDate, maxDate: orderState.dateFilter.selectedMaxDate},
+        filterOrders(orderState.domain, {dateTo: orderState.dateFilter.selectedMaxDate, dateFrom: orderState.dateFilter.selectedMinDate}));
     })
   );
   public totalPriceOfOrdersPerMonthRejected$: Observable<ChartState> = this.ordersPerMonth$.pipe(
@@ -78,10 +85,10 @@ export class OrderStateService {
         const minAndMaxDates: SelectedDateInterval = extractMinAndMaxDates(v);
         this.orderState = {
           domain: v.slice(),
-          filteredOrders: v.slice(),
           requestStatus: {
             status: Status.COMPLETED
           },
+          sort: {direction: '', active: ''},
           dateFilter: {
             maxDate: minAndMaxDates.maxDate,
             minDate: minAndMaxDates.minDate,
@@ -93,33 +100,22 @@ export class OrderStateService {
       }, error => {
         this.orderState = {
           domain: [],
-          filteredOrders: [],
           requestStatus: {
             status: Status.ERROR,
           },
-          dateFilter: undefined
+          dateFilter: undefined,
+          sort: {direction: '', active: ''},
         };
         this.orderStateSubject.next(this.orderState);
       });
   }
 
   public sortOrders(sort: Sort): void {
-    if (sort.active && sort.active === 'orderDate') {
-      if (sort.direction === '') {
-        this.orderState = {
-          ...this.orderState,
-          filteredOrders: this.orderState.domain
-            .filter(order => order.orderDate.isSameOrAfter(this.orderState.dateFilter.selectedMinDate) && order.orderDate.isSameOrBefore(this.orderState.dateFilter.selectedMaxDate))
-        };
-      } else {
-        this.orderState = {
-          ...this.orderState,
-          filteredOrders: this.orderState.filteredOrders.slice()
-            .sort((a, b) => sort.direction === 'asc' ? (a.orderDate.isSameOrBefore(b.orderDate) ? -1 : 1) : (a.orderDate.isSameOrAfter(b.orderDate) ? -1 : 1))
-        };
-      }
-      this.orderStateSubject.next(this.orderState);
-    }
+    this.orderState = {
+      ...this.orderState,
+      sort
+    };
+    this.orderStateSubject.next(this.orderState);
   }
 
   /**
@@ -128,15 +124,14 @@ export class OrderStateService {
    * @param dateTo Orders with date before dateTo
    */
 
-  public filterOrdersByDate(dateFrom: Moment, dateTo: Moment): void {
+  public filterOrdersByDate(dateFrom: number, dateTo: number): void {
     this.orderState = {
       ...this.orderState,
       dateFilter: {
         ...this.orderState.dateFilter,
         selectedMaxDate: dateTo,
         selectedMinDate: dateFrom
-      },
-      filteredOrders: this.orderState.domain.filter(order => order.orderDate.isSameOrAfter(dateFrom) && order.orderDate.isSameOrBefore(dateTo))
+      }
     };
     this.orderStateSubject.next(this.orderState);
   }

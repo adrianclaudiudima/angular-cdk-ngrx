@@ -1,4 +1,5 @@
 import {AfterViewInit, ApplicationRef, Component, ComponentFactoryResolver, Injector, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import * as moment from 'moment';
 import {Moment} from 'moment';
 import {OrderService} from '../../services/order.service';
 import {OrderStateService} from '../../../demo-cdk/services/order/order-state.service';
@@ -7,6 +8,8 @@ import {OrderState} from '../../../demo-cdk/services/order/order-state.model';
 import {Sort} from '@angular/material/sort';
 import {CdkPortal, DomPortalOutlet} from '@angular/cdk/portal';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Order} from '../../model/order.model';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-orders',
@@ -19,8 +22,17 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy {
               private applicationRef: ApplicationRef, private injector: Injector, private componentFactoryResolver: ComponentFactoryResolver,
               private router: Router, private activatedRoute: ActivatedRoute
   ) {
-    this.orders$ = this.orderStateService.orderState$;
+    this.orders$ = this.orderStateService.orderState$.pipe(
+      tap(v => {
+        this.maxDate = moment.unix(v.dateFilter?.maxDate);
+        this.minDate = moment.unix(v.dateFilter?.minDate);
+      })
+    );
+    this.filteredOrders$ = this.orderStateService.ordersFiltered$;
   }
+
+  maxDate: Moment;
+  minDate: Moment;
 
   @ViewChild(CdkPortal)
   private cdkPortal: CdkPortal;
@@ -29,6 +41,7 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   orders$: Observable<OrderState>;
+  filteredOrders$: Observable<Array<Order>>;
   private selectedStartDate: Moment;
 
   ngOnInit(): void {
@@ -51,7 +64,7 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   setEndDate(selectedEndDate: Moment): void {
     if (selectedEndDate) {
-      this.orderStateService.filterOrdersByDate(this.selectedStartDate, selectedEndDate);
+      this.orderStateService.filterOrdersByDate(this.selectedStartDate.unix(), selectedEndDate.unix());
     }
   }
 

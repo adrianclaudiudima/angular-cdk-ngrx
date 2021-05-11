@@ -1,11 +1,9 @@
-import {Moment} from 'moment';
-
 export interface Order {
   id: number;
   orderId: number;
   customerId: number;
   orderData: Array<OrderItem>;
-  orderDate: Moment;
+  orderDate: number;
   orderStatus: OrderStatus;
   // because we used random generated data, we could not extract this with the sum of orderItems value
   total?: number;

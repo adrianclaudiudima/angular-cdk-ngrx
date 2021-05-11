@@ -20,12 +20,12 @@ export class OrderService {
         return orders.map(order => {
           return {
             ...order,
-            orderDate: moment(order.orderDate, 'DD/MM/YYYY'),
+            orderDate: moment(order.orderDate, 'DD/MM/YYYY').unix(),
             total: order.orderData?.length > 0 ?
               order.orderData.map(ord => ord.quantity).reduce((previousValue, currentValue) => previousValue + currentValue) : 0
           };
         });
-      })
+      }),
     );
   }
 

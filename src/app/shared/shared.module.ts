@@ -61,6 +61,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {OrderEditOverlayComponent} from './lib/overlay/global/order-edit-overlay/order-edit-overlay.component';
 import {RouterModule} from '@angular/router';
 import {OrderEditComponent} from './components/orders/order-edit/order-edit.component';
+import {MomentPipe} from './pipes/moment.pipe';
 
 const materialDependencies = [
   MatAutocompleteModule,
@@ -119,7 +120,8 @@ const materialDependencies = [
     RightMenuOverlayPlaceholderDirective,
     ProductEditOverlayComponent,
     OrderEditOverlayComponent,
-    OrderEditComponent
+    OrderEditComponent,
+    MomentPipe
   ],
   imports: [
     CommonModule,
