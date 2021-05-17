@@ -70,8 +70,29 @@ export function getTotalOrdersRejected(orders: Array<Order>): number {
     .reduce((a, b) => a + b);
 }
 
+export function getTotalOrdersByOrderStatus(orders: Array<Order>, ORDER_STATUS: OrderStatus): number {
+  const approvedAndCompletedOrders: Array<Order> = orders.filter(({orderStatus}) => orderStatus === ORDER_STATUS);
+  return approvedAndCompletedOrders.length === 0 ? 0 : approvedAndCompletedOrders.map(order => order.orderData.length === 0 ? 0 : order.orderData.map(od => od.quantity).reduce((a, b) => a + b))
+    .reduce((a, b) => a + b);
+}
+
+
 export function filterOrders(orders: Array<Order>, range: { dateFrom: number, dateTo: number }): Array<Order> {
   return orders.filter(order => moment.unix(order.orderDate).isSameOrAfter(moment.unix(range.dateFrom)) && moment.unix(order.orderDate).isSameOrBefore(moment.unix(range.dateTo)));
+}
+
+export function calculateTotalCustomers(orders: Array<Order>): number {
+  const customerIds: Array<number> = [];
+  orders.forEach(order => {
+    if (!customerIds.find(cId => cId === order.customerId)) {
+      customerIds.push(order.customerId);
+    }
+  });
+  return customerIds.length;
+}
+
+export function calculateSoldVsRejected(sold: number, rejected: number): number {
+  return (100 * (sold - rejected)) / sold;
 }
 
 export interface OrdersPerMonth {

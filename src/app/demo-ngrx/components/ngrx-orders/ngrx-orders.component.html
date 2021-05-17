@@ -1,28 +1,31 @@
 <div class="orders">
-  <ng-container *ngIf="orders$ | async as orders">
+  <ng-container *ngIf="dateFilter$ | async as dateFilter">
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <div fxLayout="column" fxLayoutGap="10px">
         <div class="mat-title-extended">ALL ORDERS</div>
         <mat-form-field appearance="fill">
           <mat-label>Enter a date range</mat-label>
-          <mat-date-range-input [rangePicker]="picker" [min]="orders?.dateFilter?.minDate" [max]="orders?.dateFilter?.maxDate">
-            <input matStartDate placeholder="Start date" (dateChange)="setStartDate($event.value)" [value]="orders?.dateFilter?.minDate">
-            <input matEndDate placeholder="End date" (dateChange)="setEndDate($event.value)" [value]="orders?.dateFilter?.maxDate">
+          <mat-date-range-input [rangePicker]="picker" [min]="dateFilterValues.min" [max]="dateFilterValues.max">
+            <input matStartDate placeholder="Start date" (dateChange)="setStartDate($event.value)" [value]="dateFilterValues.minSelected">
+            <input matEndDate placeholder="End date" (dateChange)="setEndDate($event.value)" [value]="dateFilterValues.maxSelected">
           </mat-date-range-input>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
       </div>
 
-      <button mat-stroked-button color="accent" (click)="refreshData()" *cdkPortal>
-        <span>Refresh data</span>
-        <mat-icon>refresh</mat-icon>
-      </button>
+      <app-dom-portal selector="#refreshPlaceholder">
+        <button mat-stroked-button color="accent" (click)="refreshData()">
+          <span>Refresh data</span>
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </app-dom-portal>
 
     </div>
-    <!-- todo : change the property binding-->
+  </ng-container>
+  <ng-container *ngIf="orders$ | async as orders">
     <app-order-table
-      [orders]="orders.domain"
+      [orders]="orders"
       (sortChanged)="handleSortChanged($event)"
       (openOrderEvent)="handleOpenOrderEvent($event)"
     >

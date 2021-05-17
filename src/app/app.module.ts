@@ -9,6 +9,10 @@ import {DialogContentExampleDialog, MaterialTestComponent} from './components/ma
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppCoreModule} from './core/app-core.module';
 import {HttpClientModule} from '@angular/common/http';
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,13 @@ import {HttpClientModule} from '@angular/common/http';
     SharedModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forRoot({}),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
+    EffectsModule.forRoot([])
   ],
   providers: [],
   bootstrap: [AppComponent]
